@@ -12,8 +12,10 @@ module.exports = (grunt) ->
   pkgs = ["sdl", "sdl-gfx"]
   cc = []
   files = []
-
   source = false
+
+  if os.platform() is "win32"
+    cc.push "-mconsole"
 
   pkgs = pkgs.map((pkg) -> "--pkg=#{pkg}").join " "
   cc = cc.map((option) -> "--Xcc=#{option}").join " "
@@ -45,7 +47,7 @@ module.exports = (grunt) ->
       compile:
         command: command
     watch:
-      files: ["**/*.vala", "Engine/**/*.vala", "Game/**/*.vala"]
+      files: ["**/*.vala", "Engine/**/*.vala", "Engine/**/**/*.vala", "Game/**/*.vala"]
       tasks: ["mkdir", "shell:compile"]
 
   grunt.loadNpmTasks "grunt-shell"

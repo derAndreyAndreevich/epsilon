@@ -1,40 +1,37 @@
 namespace Engine.System {
 
   public class Application: Object {
-    bool _is_done;
+    bool __is_done;
     List<GameObject> _game_objects;
+    unowned SDL.Surface __surface;
 
 
-    int _width = 800;
-    public int get_width() { return _width; }
-    public Application set_width(int width = 800) { _width = width; return this; }
+    public int width { get; private set; default = 800; }
+    public int getWidth() { return width; }
+    public Application setWidth(int val) { width = val; return this; }
 
-    int _height = 600;
-    public int get_height() { return _height; }
-    public Application set_height(int height = 600) { _height = height; return this; }
+    public int height { get; private set; default = 600; }
+    public int getHeight() { return height; }
+    public Application setHeight(int val) { height = val; return this; }
 
-    int _depth = 32;
-    public int get_depth() { return _depth; }
-    public Application set_depth(int depth = 32) { _depth = depth; return this; }
+    public int depth { get; private set; default = 32; }
+    public int getDepth() { return depth; }
+    public Application setDepth(int val) { depth = val; return this; }
+
+    public string caption { get; private set; default = "SHEngine"; }
+    public string getCaption() { return caption; }
+    public Application setCaption(string val) { caption = val; return this; }
+
+    uint32 flags = SDL.SurfaceFlag.DOUBLEBUF
+                 | SDL.SurfaceFlag.HWACCEL
+                 | SDL.SurfaceFlag.HWSURFACE;
 
     public string fields() {
-      return @"width: $_width, height: $_height, depth: $_depth";
+      return @"width: $width, height: $height, depth: $depth";
     }
 
     public string to_string() {
       return @"Application {$(fields())}";
-    }
-
-    public Application append_object(GameObject obj) {
-      _game_objects.append(obj);
-      return this;
-    }
-
-    public Application append_objects(GameObject[] objects) {
-      foreach (var obj in objects) {
-        append_object(obj);
-      }
-      return this;
     }
 
     public signal void on_run();
@@ -51,8 +48,8 @@ namespace Engine.System {
 
       on_run();
 
-      while (!_is_done) {
-        _is_done = true;
+      while (!__is_done) {
+        __is_done = true;
         on_draw();
       }
 
@@ -96,8 +93,9 @@ namespace Engine.System {
 
 
     public Application() {
-      this.on_exit.connect(() => { this.exit(); });
-      this.on_key_down.connect(() => {});
+      __surface = SDL.Screen.set_video_mode(width, height, depth, flags);
+      on_exit.connect(() => { this.exit(); });
+      on_key_down.connect(() => {});
     }
 
   }

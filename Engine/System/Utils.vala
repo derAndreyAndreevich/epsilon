@@ -1,7 +1,7 @@
 namespace Engine.System.Utils {
   public class Hex: Object {
 
-    public static int64 to_int(string hex) {
+    public static int64 toInt(string hex) {
 
       string hexdown = hex.down();
       int hexlen = hex.length;
@@ -34,7 +34,7 @@ namespace Engine.System.Utils {
   }
 
   public class Console: Object {
-    public static void write_line(string text) {
+    public static void writeLine(string text) {
       stdout.printf(text + "\n");
     }
   }
