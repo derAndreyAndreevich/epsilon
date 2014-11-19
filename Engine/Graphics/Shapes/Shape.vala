@@ -15,7 +15,7 @@ namespace Engine.Graphics.Shapes {
         result = color[0:6] + "00";
       } else if (color[0] == '#' && color.length < 9) {
         result = color[1:7] + "00";
-      }
+      } 
 
       return result;
     }
@@ -52,28 +52,11 @@ namespace Engine.Graphics.Shapes {
     public string to_string() {
       return @"Shape {$(fields())}";
     }
+
     public string toString() {
       return to_string();
     }
 
   }
-
-  // public class Circle: Shape {
-
-  //   public new Circle set_fill_color(string fillColor) { base.set_fill_color(fillColor); return this; }
-
-  //   int _radius = 25;
-  //   public int get_radius() { return _radius; }
-  //   public Circle set_radius(int radius) { _radius = radius; return this; }
-
-  //   public new string fields() {
-  //     return @"$(base.fields()), radius: $_radius";
-  //   }
-
-  //   public new string to_string() {
-  //     return @"Circle {$(fields())}";
-  //   }
-
-  // }
 
 }

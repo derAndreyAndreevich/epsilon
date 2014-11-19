@@ -1,26 +1,85 @@
 namespace Engine.System {
 
   public class Application: Object {
-    bool __is_done;
-    List<GameObject> _game_objects;
-    unowned SDL.Surface __surface;
+    bool isDone;
+    unowned SDL.Surface surface;
 
+    public int width { 
+      default = 800;
+      get { 
+        return width;
+      } 
+      set {
+        width = value;
+      }
+    }
+    
+    public int getWidth() { 
+      return width; 
+    }
+    
+    public Application setWidth(int val = 800) { 
+      width = val; 
+      return this; 
+    }
 
-    public int width { get; private set; default = 800; }
-    public int getWidth() { return width; }
-    public Application setWidth(int val) { width = val; return this; }
+    public int height { 
+      default = 600;
+      get { 
+        return height;
+      } 
+      set {
+        height = value;
+      }
+    }
+    
+    public int getHeight() { 
+      return height; 
+    }
+    
+    public Application setHeight(int val = 600) { 
+      height = val; 
+      return this; 
+    }
+    
+    public int depth { 
+      default = 32;
+      get { 
+        return depth;
+      } 
+      set {
+        depth = value;
+      }
+    }
+    
+    public int getDepth() { 
+      return depth; 
+    }
+    
+    public Application setDepth(int val = 32) { 
+      depth = val; 
+      return this; 
+    }
 
-    public int height { get; private set; default = 600; }
-    public int getHeight() { return height; }
-    public Application setHeight(int val) { height = val; return this; }
-
-    public int depth { get; private set; default = 32; }
-    public int getDepth() { return depth; }
-    public Application setDepth(int val) { depth = val; return this; }
-
-    public string caption { get; private set; default = "SHEngine"; }
-    public string getCaption() { return caption; }
-    public Application setCaption(string val) { caption = val; return this; }
+    public string caption { 
+      default = "Engine";
+      get { 
+        return caption;
+      } 
+      set {
+        caption = value;
+      }
+    }
+    
+    public string getCaption() { 
+      return caption; 
+    }
+    
+    public Application setCaption(string val = "Engine") { 
+      caption = val; 
+      return this; 
+    }
+    
 
     uint32 flags = SDL.SurfaceFlag.DOUBLEBUF
                  | SDL.SurfaceFlag.HWACCEL
@@ -33,58 +92,62 @@ namespace Engine.System {
     public string to_string() {
       return @"Application {$(fields())}";
     }
+    
+    public string toString() {
+      return to_string();
+    }
 
-    public signal void on_run();
-    public signal void on_draw();
-    public signal void on_update();
-    public signal void on_key_down();
-    public signal void on_key_up();
-    public signal void on_mouse_move();
-    public signal void on_mouse_down();
-    public signal void on_mouse_up();
-    public signal void on_exit();
+    public signal void onRun();
+    public signal void onDraw();
+    // public signal void on_update();
+    // public signal void on_key_down();
+    // public signal void on_key_up();
+    // public signal void on_mouse_move();
+    // public signal void on_mouse_down();
+    // public signal void on_mouse_up();
+    public signal void onExit();
 
     public Application run() {
 
-      on_run();
+      onRun();
 
-      while (!__is_done) {
-        __is_done = true;
-        on_draw();
+      while (!isDone) {
+        isDone = true;
+        onDraw();
       }
 
-      on_exit();
+      onExit();
 
       return this;
     }
 
-    Application draw() {
-      return this;
-    }
+    // Application draw() {
+    //   return this;
+    // }
 
-    Application update() {
-      return this;
-    }
+    // Application update() {
+    //   return this;
+    // }
 
-    Application key_down() {
-      return this;
-    }
+    // Application key_down() {
+    //   return this;
+    // }
 
-    Application key_up() {
-      return this;
-    }
+    // Application key_up() {
+    //   return this;
+    // }
 
-    Application mouse_move() {
-      return this;
-    }
+    // Application mouse_move() {
+    //   return this;
+    // }
 
-    Application mouse_down() {
-      return this;
-    }
+    // Application mouse_down() {
+    //   return this;
+    // }
 
-    Application mouse_up() {
-      return this;
-    }
+    // Application mouse_up() {
+    //   return this;
+    // }
 
     public Application exit() {
       SDL.quit();
@@ -93,9 +156,8 @@ namespace Engine.System {
 
 
     public Application() {
-      __surface = SDL.Screen.set_video_mode(width, height, depth, flags);
-      on_exit.connect(() => { this.exit(); });
-      on_key_down.connect(() => {});
+      surface = SDL.Screen.set_video_mode(width, height, depth, flags);
+      onExit.connect(() => { this.exit(); });
     }
 
   }

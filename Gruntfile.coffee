@@ -47,7 +47,10 @@ module.exports = (grunt) ->
       compile:
         command: command
     watch:
-      files: ["**/*.vala", "Engine/**/*.vala", "Engine/**/**/*.vala", "Game/**/*.vala"]
+      files: [
+        "**/*.vala", 
+        "**/**/*.vala"
+      ]
       tasks: ["mkdir", "shell:compile"]
 
   grunt.loadNpmTasks "grunt-shell"
